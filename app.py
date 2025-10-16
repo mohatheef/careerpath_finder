@@ -1,21 +1,32 @@
 import streamlit as st
 import json
+import os
+
+# ----------------------------------------------------------
+# Page Config MUST be the very first Streamlit command
+# ----------------------------------------------------------
+st.set_page_config(
+    page_title="CareerPath Finder",
+    layout="wide",
+    page_icon="🎓"
+)
 
 # ----------------------------------------------------------
 # Load Data
 # ----------------------------------------------------------
 @st.cache_data
 def load_data():
-    with open("data/courses.json", "r", encoding="utf-8") as f:
+    # Path-independent JSON load for Streamlit Cloud
+    base_path = os.path.dirname(__file__)
+    path = os.path.join(base_path, "data", "courses.json")
+    with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 courses_data = load_data()
 
 # ----------------------------------------------------------
-# Page Config
+# App Header
 # ----------------------------------------------------------
-st.set_page_config(page_title="CareerPath Finder", layout="wide")
-
 st.title("🎓 CareerPath Finder – Explore Every Career Path")
 st.subheader("Helping students from every background find affordable and meaningful education opportunities")
 
@@ -113,6 +124,9 @@ with tab3:
     - SWAYAM / NPTEL / Coursera online certification programs  
     """)
 
+# ----------------------------------------------------------
+# Footer & Disclaimer
+# ----------------------------------------------------------
 st.markdown("---")
 st.markdown(
     "Created with ❤️ by **Mohammed Atheef G A** | "
@@ -125,4 +139,3 @@ st.warning(
     "Some course details, fees, or career information may be inaccurate or incomplete. "
     "Users are advised to verify information from official sources before making educational or career decisions."
 )
-
